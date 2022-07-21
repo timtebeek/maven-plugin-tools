@@ -29,7 +29,7 @@
 
   <groupId>org.apache.maven.plugin-tools</groupId>
   <artifactId>maven-plugin-tools</artifactId>
-  <version>3.8.3-SNAPSHOT</version>
+  <version>3.9.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>Maven Plugin Tools</name>
@@ -97,15 +97,13 @@
     <slf4jVersion>1.7.36</slf4jVersion>
     <antVersion>1.10.13</antVersion>
     <maven.site.path>plugin-tools-archives/plugin-tools-LATEST</maven.site.path>
-    <!-- whenever the ASM version is updated also the 
-    maven-plugin-tools-annotations/src/main/java/o/a/m/tools/plugins/extractor/annotations/JavaAnnotationsMojoDescriptorExtractor#CLASS_VERSION_TO_JAVA_STRING 
+    <!-- whenever the ASM version is updated also the
+    maven-plugin-tools-annotations/src/main/java/o/a/m/tools/plugins/extractor/annotations/JavaAnnotationsMojoDescriptorExtractor#CLASS_VERSION_TO_JAVA_STRING
     needs to be updated as well -->
     <asmVersion>9.5</asmVersion>
-    <doxiaVersion>1.11.1</doxiaVersion>
-    <doxia-sitetoolsVersion>1.11.1</doxia-sitetoolsVersion>
-    <plexusUtilsVersion>3.5.0</plexusUtilsVersion>
-    <reportingApiVersion>3.1.1</reportingApiVersion>
-    <reportingImplVersion>3.2.0</reportingImplVersion>
+    <plexusUtilsVersion>3.5.1</plexusUtilsVersion>
+    <reportingApiVersion>4.0.0-M6</reportingApiVersion>
+    <reportingImplVersion>4.0.0-M8</reportingImplVersion>
     <project.build.outputTimestamp>2023-04-18T16:00:57Z</project.build.outputTimestamp>
   </properties>
 
@@ -182,43 +180,16 @@
         <artifactId>maven-settings</artifactId>
         <version>${mavenVersion}</version>
       </dependency>
-      <!-- doxia -->
+      <!-- shared -->
       <dependency>
-        <groupId>org.apache.maven.doxia</groupId>
-        <artifactId>doxia-sink-api</artifactId>
-        <version>${doxiaVersion}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.apache.maven.doxia</groupId>
-        <artifactId>doxia-site-renderer</artifactId>
-        <version>${doxia-sitetoolsVersion}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-component-api</artifactId>
-          </exclusion>
-        </exclusions>
+        <groupId>org.apache.maven.reporting</groupId>
+        <artifactId>maven-reporting-api</artifactId>
+        <version>${reportingApiVersion}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.maven.reporting</groupId>
         <artifactId>maven-reporting-impl</artifactId>
         <version>${reportingImplVersion}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-container-default</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
 
       <dependency>
@@ -245,15 +216,11 @@
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
         <artifactId>plexus-velocity</artifactId>
-        <version>1.2</version>
+        <version>2.0</version>
         <exclusions>
           <exclusion>
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-container-default</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>velocity</groupId>
-            <artifactId>velocity</artifactId>
           </exclusion>
         </exclusions>
       </dependency>
@@ -261,8 +228,8 @@
       <!-- other -->
       <dependency>
         <groupId>org.apache.velocity</groupId>
-        <artifactId>velocity</artifactId>
-        <version>1.7</version>
+        <artifactId>velocity-engine-core</artifactId>
+        <version>2.3</version>
       </dependency>
 
       <dependency>

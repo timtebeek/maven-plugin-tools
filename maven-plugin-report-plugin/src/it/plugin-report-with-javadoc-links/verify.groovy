@@ -21,11 +21,11 @@ def mojoDoc = new File( basedir, 'target/site/test-mojo.html' )
 
 assert mojoDoc.isFile()
 
-assert mojoDoc.text.contains('<b>See also:</b> <a class="externalLink" href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html">java.util.Collections</a></div>') // mojo description see javadoc tag
+assert mojoDoc.text.contains('<strong>See also:</strong> <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html" class="externalLink">java.util.Collections</a></div>') // mojo description see javadoc tag
 
 assert mojoDoc.text.contains('beans parameter leveraging <a href="apidocs/org/SimpleBean.html"><code>SimpleBean</code></a>.') // parameter description
 assert mojoDoc.text.contains('<td><code><a href="apidocs/org/SimpleBean.html">Collection&lt;SimpleBean&gt;</a></code></td>') // type link in parameter overview
-assert mojoDoc.text.contains('<li><b>Type</b>: <code><a href="apidocs/org/SimpleBean.html">java.util.Collection&lt;org.SimpleBean&gt;</a></code></li>') // type link in parameter details
+assert mojoDoc.text.contains('<li><strong>Type</strong>: <code><a href="apidocs/org/SimpleBean.html">java.util.Collection&lt;org.SimpleBean&gt;</a></code></li>') // type link in parameter details
 
 assert mojoDoc.text.contains('<div>invalid javadoc reference <code>org.apache.maven.artifact.Artifact</code>.</div>') // second parameter description with link being removed (as no javadoc site associated)
 

@@ -81,7 +81,7 @@ public class PluginXdocGenerator implements Generator {
     private final boolean disableInternalJavadocLinkValidation;
 
     /**
-     * Default constructor using <code>Locale.ENGLISH</code> as locale.
+     * Default constructor using <code>Locale.ROOT</code> as locale.
      * Used only in test cases.
      */
     public PluginXdocGenerator() {
@@ -89,17 +89,17 @@ public class PluginXdocGenerator implements Generator {
     }
 
     /**
-     * Constructor using <code>Locale.ENGLISH</code> as locale.
+     * Constructor using <code>Locale.ROOT</code> as locale.
      *
      * @param project not null Maven project.
      */
     public PluginXdocGenerator(MavenProject project) {
-        this(project, Locale.ENGLISH, new File("").getAbsoluteFile(), false);
+        this(project, Locale.ROOT, new File("").getAbsoluteFile(), false);
     }
 
     /**
      * @param project not null.
-     * @param locale  not null wanted locale.
+     * @param locale  not null.
      */
     public PluginXdocGenerator(
             MavenProject project,
@@ -107,11 +107,7 @@ public class PluginXdocGenerator implements Generator {
             File reportOutputDirectory,
             boolean disableInternalJavadocLinkValidation) {
         this.project = project;
-        if (locale == null) {
-            this.locale = Locale.ENGLISH;
-        } else {
-            this.locale = locale;
-        }
+        this.locale = locale;
         this.reportOutputDirectory = reportOutputDirectory;
         this.disableInternalJavadocLinkValidation = disableInternalJavadocLinkValidation;
     }
@@ -139,22 +135,14 @@ public class PluginXdocGenerator implements Generator {
      * @throws IOException if any
      */
     protected void processMojoDescriptor(MojoDescriptor mojoDescriptor, File destinationDirectory) throws IOException {
-        File outputFile = new File(destinationDirectory, getMojoFilename(mojoDescriptor, "xml"));
+        // TODO Rewrite to: Sink sink = new XdocSinkFactory().createSink(outputDir, "*-mojo.xml", encoding);
+        File outputFile = new File(destinationDirectory, mojoDescriptor.getGoal() + "-mojo.xml");
         try (Writer writer = new OutputStreamWriter(new CachingOutputStream(outputFile), UTF_8)) {
             XMLWriter w = new PrettyPrintXMLWriter(new PrintWriter(writer), UTF_8.name(), null);
             writeBody(mojoDescriptor, w);
 
             writer.flush();
         }
-    }
-
-    /**
-     * @param mojo not null
-     * @param ext  not null
-     * @return the output file name
-     */
-    private String getMojoFilename(MojoDescriptor mojo, String ext) {
-        return mojo.getGoal() + "-mojo." + ext;
     }
 
     /**
@@ -196,9 +184,7 @@ public class PluginXdocGenerator implements Generator {
         w.writeMarkup(getString("pluginxdoc.mojodescriptor.fullname"));
         w.endElement(); // p
         w.startElement("p");
-        w.writeMarkup(mojoDescriptor.getPluginDescriptor().getGroupId() + ":"
-                + mojoDescriptor.getPluginDescriptor().getArtifactId() + ":"
-                + mojoDescriptor.getPluginDescriptor().getVersion() + ":" + mojoDescriptor.getGoal());
+        w.writeMarkup(mojoDescriptor.getPluginDescriptor().getId() + ":" + mojoDescriptor.getGoal());
         w.endElement(); // p
 
         String context = "goal " + mojoDescriptor.getGoal();
@@ -446,7 +432,6 @@ public class PluginXdocGenerator implements Generator {
 
             w.startElement("div");
             if (StringUtils.isNotEmpty(parameter.getDescription())) {
-
                 w.writeMarkup(getXhtmlWithValidatedLinks(parameter.getDescription(), context));
             } else {
                 w.writeMarkup(getString("pluginxdoc.nodescription"));
@@ -630,7 +615,7 @@ public class PluginXdocGenerator implements Generator {
         w.addAttribute("name", title);
 
         w.startElement("table");
-        w.addAttribute("border", "0");
+        w.addAttribute("class", "bodyTable");
 
         w.startElement("tr");
         w.startElement("th");

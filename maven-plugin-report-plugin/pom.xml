@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.maven.plugin-tools</groupId>
     <artifactId>maven-plugin-tools</artifactId>
-    <version>3.8.3-SNAPSHOT</version>
+    <version>3.9.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.apache.maven.plugins</groupId>
@@ -56,7 +56,6 @@
     <dependency>
       <groupId>org.apache.maven.reporting</groupId>
       <artifactId>maven-reporting-api</artifactId>
-      <version>${reportingApiVersion}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -88,6 +87,12 @@
     <dependency>
       <groupId>org.apache.maven.doxia</groupId>
       <artifactId>doxia-sink-api</artifactId>
+      <version>2.0.0-M6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.doxia</groupId>
+      <artifactId>doxia-integration-tools</artifactId>
+      <version>2.0.0-M10</version>
     </dependency>
 
     <!-- shared -->
@@ -100,6 +105,18 @@
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-utils</artifactId>
+    </dependency>
+    <!-- Plexus -->
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-i18n</artifactId>
+      <version>1.0-beta-10</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-component-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- tests -->
@@ -227,8 +244,9 @@
               <settingsFile>src/it/settings.xml</settingsFile>
               <streamLogsOnFailures>true</streamLogsOnFailures>
               <filterProperties>
-                <sitePluginVersion>3.12.1</sitePluginVersion>
-                <projectInfoReportsPlugin>3.4.1</projectInfoReportsPlugin>
+                <sitePluginVersion>4.0.0-M8</sitePluginVersion>
+                <projectInfoReportsPlugin>4.0.0-M1-SNAPSHOT</projectInfoReportsPlugin>
+                <compilerPluginVersion>3.11.0</compilerPluginVersion>
                 <antVersion>${antVersion}</antVersion>
               </filterProperties>
               <properties>
